@@ -14,6 +14,7 @@ class TCircularImage extends StatelessWidget {
     this.width = 56,
     this.height = 56,
     this.padding = TSizes.sm,
+    this.radius = 100,
   });
 
   final BoxFit? fit;
@@ -22,6 +23,7 @@ class TCircularImage extends StatelessWidget {
   final Color? overlayColor;
   final Color? backgroundColor;
   final double width, height, padding;
+  final double? radius;
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +34,18 @@ class TCircularImage extends StatelessWidget {
       padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
         color: backgroundColor ?? (isDarkMode ? TColors.black : TColors.white),
-        borderRadius: BorderRadius.circular(100),
+        borderRadius: BorderRadius.circular(radius!),
       ),
       child: Center(
-        child: Image(
-          fit: fit,
-          image: isNetworkImage
-              ? NetworkImage(image)
-              : AssetImage(image) as ImageProvider,
-          color: overlayColor,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(radius!),
+          child: Image(
+            fit: fit,
+            image: isNetworkImage
+                ? NetworkImage(image)
+                : AssetImage(image) as ImageProvider,
+            color: overlayColor,
+          ),
         ),
       ),
     );

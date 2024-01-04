@@ -7,6 +7,7 @@ import 'package:flutter_ecommerce_app/common/widgets/texts/section_heading.dart'
 import 'package:flutter_ecommerce_app/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:flutter_ecommerce_app/features/shop/screens/home/widgets/home_categories.dart';
 import 'package:flutter_ecommerce_app/features/shop/screens/home/widgets/promo_slider.dart';
+import 'package:flutter_ecommerce_app/utils/constants/colors.dart';
 import 'package:flutter_ecommerce_app/utils/constants/image_strings.dart';
 import 'package:flutter_ecommerce_app/utils/constants/sizes.dart';
 
@@ -31,7 +32,24 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(height: TSizes.spaceBtwSections),
 
                   /// Categories
-                  THomeCategories(),
+                  Padding(
+                    padding: EdgeInsets.only(left: TSizes.defaultSpace),
+                    child: Column(
+                      children: [
+                        /// Heading
+                        TSectionHeading(
+                          title: 'Popular Categories',
+                          showActionButton: false,
+                          textColor: TColors.white,
+                        ),
+                        SizedBox(height: TSizes.spaceBtwItems),
+
+                        THomeCategories(),
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(height: TSizes.spaceBtwSections),
                 ],
               ),
             ),

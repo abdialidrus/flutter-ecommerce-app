@@ -13,7 +13,6 @@ import 'package:flutter_ecommerce_app/utils/constants/image_strings.dart';
 import 'package:flutter_ecommerce_app/utils/constants/sizes.dart';
 import 'package:flutter_ecommerce_app/utils/helpers/helper_functions.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({super.key});
@@ -30,35 +29,35 @@ class CheckoutScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(TSizes.defaultSpace),
+          padding: const EdgeInsets.all(TSizes.defaultSpace),
           child: Column(
             children: [
               /// Items in Cart
-              TCartItems(showAddRemoveButtons: false),
-              SizedBox(height: TSizes.spaceBtwSections),
+              const TCartItems(showAddRemoveButtons: false),
+              const SizedBox(height: TSizes.spaceBtwSections),
 
               /// Coupons Textfield
-              TCouponCode(),
-              SizedBox(height: TSizes.spaceBtwSections),
+              const TCouponCode(),
+              const SizedBox(height: TSizes.spaceBtwSections),
 
               /// Billing section
               TRoundedContainer(
                 showBorder: true,
-                padding: EdgeInsets.all(TSizes.md),
+                padding: const EdgeInsets.all(TSizes.md),
                 backgroundColor: isDarkMode ? TColors.black : TColors.white,
-                child: Column(
+                child: const Column(
                   children: [
                     /// Pricing
                     TBillingAmountSection(),
-                    const SizedBox(height: TSizes.spaceBtwItems),
+                    SizedBox(height: TSizes.spaceBtwItems),
 
                     /// Divider
-                    const Divider(),
-                    const SizedBox(height: TSizes.spaceBtwItems),
+                    Divider(),
+                    SizedBox(height: TSizes.spaceBtwItems),
 
                     /// Payment Methods
                     TBillingPaymentSection(),
-                    const SizedBox(height: TSizes.spaceBtwItems),
+                    SizedBox(height: TSizes.spaceBtwItems),
 
                     /// Address
                     TBillingAddressSection(),

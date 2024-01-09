@@ -4,12 +4,14 @@ import 'package:flutter_ecommerce_app/common/widgets/custom_shapes/containers/se
 import 'package:flutter_ecommerce_app/common/widgets/layouts/grid_layout.dart';
 import 'package:flutter_ecommerce_app/common/widgets/products/product_cards/product_card_vertical.dart';
 import 'package:flutter_ecommerce_app/common/widgets/texts/section_heading.dart';
+import 'package:flutter_ecommerce_app/features/shop/screens/all_products/all_products.dart';
 import 'package:flutter_ecommerce_app/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:flutter_ecommerce_app/features/shop/screens/home/widgets/home_categories.dart';
 import 'package:flutter_ecommerce_app/features/shop/screens/home/widgets/promo_slider.dart';
 import 'package:flutter_ecommerce_app/utils/constants/colors.dart';
 import 'package:flutter_ecommerce_app/utils/constants/image_strings.dart';
 import 'package:flutter_ecommerce_app/utils/constants/sizes.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -70,7 +72,9 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(height: TSizes.spaceBtwSections),
 
                   /// Popular Products - Heading
-                  TSectionHeading(title: 'Popular Products', onPressed: () {}),
+                  TSectionHeading(
+                      title: 'Popular Products',
+                      onPressed: () => Get.to(() => const AllProductsScreen())),
                   const SizedBox(height: TSizes.spaceBtwItems),
 
                   /// Popular Products - List

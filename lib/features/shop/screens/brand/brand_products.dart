@@ -9,16 +9,16 @@ class BrandProductsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       appBar: TAppBar(title: Text('Nike')),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(TSizes.defaultSpace),
+          padding: EdgeInsets.all(TSizes.defaultSpace),
           child: Column(
             children: [
               /// Brand detail
               TBrandCard(showBorder: true),
-              const SizedBox(height: TSizes.spaceBtwSections),
+              SizedBox(height: TSizes.spaceBtwSections),
 
               TSortableProducts(),
             ],

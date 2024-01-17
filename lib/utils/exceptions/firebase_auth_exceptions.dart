@@ -13,6 +13,8 @@ class TFirebaseAuthException implements Exception {
         return 'The email address is already registered. Please use a different email.';
       case 'invalid-email':
         return 'The email address provided is invalid. Please enter a valid email.';
+      case 'invalid-credential':
+        return 'The email or password provided is invalid. Please enter a valid credential.';
       case 'weak-password':
         return 'The password is too weak. Please choose a stronger password.';
       case 'user-disabled':
@@ -38,7 +40,7 @@ class TFirebaseAuthException implements Exception {
       case 'user-mismatch':
         return 'The supplied credentials do not correspond to the previously signed in user.';
       default:
-        return 'An unexpected Firebase Authentication error occured. Please try again.';
+        return 'An unexpected Firebase Authentication error occured. Please try again. ($code)';
     }
   }
 }

@@ -59,6 +59,8 @@ class TImages {
       "assets/images/animations/sammy-line-travel-backpack-with-passport-and-air-ticket.gif";
   static const String loaderAnimation =
       "assets/images/animations/loader-animation.json";
+  static const successfullyRegisterAnimation =
+      "assets/images/animations/success-checkmark.gif";
 
   // -- OnBoarding Texts
   static const String onBoardingImage1 =

@@ -38,8 +38,7 @@ class TFormatException implements Exception {
         return const TFormatException(
             'The input should be a valid numeric format.');
       default:
-        return const TFormatException(
-            'An unexpected format exception occured. Please try again later.');
+        return const TFormatException();
     }
   }
 }

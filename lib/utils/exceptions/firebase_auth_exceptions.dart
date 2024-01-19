@@ -39,6 +39,10 @@ class TFirebaseAuthException implements Exception {
         return 'This credential is already associated with a different user account.';
       case 'user-mismatch':
         return 'The supplied credentials do not correspond to the previously signed in user.';
+      case 'account-exists-with-different-credential':
+        return 'An account already exists with the same email but different sign-in credentials.';
+      case 'operation-not-allowed':
+        return 'This operation is not allowed. Contact support for assistance.';
       default:
         return 'An unexpected Firebase Authentication error occured. Please try again. ($code)';
     }

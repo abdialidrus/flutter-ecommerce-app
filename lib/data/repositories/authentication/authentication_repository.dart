@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_ecommerce_app/features/authentication/screens/login/login.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_ecommerce_app/utils/exceptions/platform_exceptions.dart'
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
@@ -46,7 +48,7 @@ class AuthenticationRepository extends GetxController {
   /* --------------- Email & Password Sign-in -------------- */
 
   /// [EmailAuthentication] - Signin
-  Future<UserCredential> loginWithEmailAndPassword(
+  Future<UserCredential?> loginWithEmailAndPassword(
       String email, String password) async {
     try {
       return await _auth.signInWithEmailAndPassword(
@@ -60,12 +62,16 @@ class AuthenticationRepository extends GetxController {
     } on PlatformException catch (e) {
       throw TPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong with the Sign In process. Please try again.';
+      if (kDebugMode) {
+        print(
+            'UNEXPECTED_EXCEPTION - loginWithEmailAndPassword() | error => $e');
+      }
+      return null;
     }
   }
 
   /// [EmailAuthentication] - Registration
-  Future<UserCredential> registerWithEmailAndPassword(
+  Future<UserCredential?> registerWithEmailAndPassword(
     String email,
     String password,
   ) async {
@@ -81,7 +87,11 @@ class AuthenticationRepository extends GetxController {
     } on PlatformException catch (e) {
       throw TPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. Please try again.';
+      if (kDebugMode) {
+        print(
+            'UNEXPECTED_EXCEPTION - registerWithEmailAndPassword() | error => $e');
+      }
+      return null;
     }
   }
 
@@ -98,7 +108,10 @@ class AuthenticationRepository extends GetxController {
     } on PlatformException catch (e) {
       throw TPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. Please try again.';
+      if (kDebugMode) {
+        print('UNEXPECTED_EXCEPTION - sendEmailVerification() | error => $e');
+      }
+      return;
     }
   }
 
@@ -106,14 +119,51 @@ class AuthenticationRepository extends GetxController {
 
   /// [EmailAuthentication] - Forgot Password
 
-  /* ----------- Social Sign-in --------------- */
-  /* ----------- ./end Social Sign-in --------------- */
+/* ----------- Social Sign-in --------------- */
+  /// [GoogleAuthentication] - GOOGLE
+  Future<UserCredential?> signInWithGoogle() async {
+    try {
+      // Trigger the authentication flow
+      final GoogleSignInAccount? userAccount = await GoogleSignIn().signIn();
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth =
+          await userAccount?.authentication;
+
+      // Create a new credential
+      final credentials = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      // Once signed in, return the User credentials
+      return await _auth.signInWithCredential(credentials);
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      if (kDebugMode) {
+        print('UNEXPECTED_EXCEPTION - signInWithGoogle() | error => $e');
+      }
+      return null;
+    }
+  }
+
+  /// [FacebookAuthentication] - FACEBOOK
+
+/* ----------- ./end Social Sign-in --------------- */
 
   /// [LogoutUser] - valid for any authentication
 
   /// [DeleteUser] - Remove user Auth and Firestore account
   Future<void> logout() async {
     try {
+      await GoogleSignIn().signOut();
       await FirebaseAuth.instance.signOut();
       Get.offAll(() => const LoginScreen());
     } on FirebaseAuthException catch (e) {
@@ -125,7 +175,10 @@ class AuthenticationRepository extends GetxController {
     } on PlatformException catch (e) {
       throw TPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. Please try again.';
+      if (kDebugMode) {
+        print('UNEXPECTED_EXCEPTION - logout() | error => $e');
+      }
+      return;
     }
   }
 }

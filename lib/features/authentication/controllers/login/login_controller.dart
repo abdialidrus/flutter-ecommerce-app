@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_ecommerce_app/data/repositories/authentication/authentication_repository.dart';
+import 'package:flutter_ecommerce_app/features/personalization/controllers/user_controller.dart';
 import 'package:flutter_ecommerce_app/utils/constants/image_strings.dart';
 import 'package:flutter_ecommerce_app/utils/helpers/network_manager.dart';
 import 'package:flutter_ecommerce_app/utils/popups/full_screen_loader.dart';
@@ -15,12 +16,13 @@ class LoginController extends GetxController {
   final tecEmail = TextEditingController();
   final tecPassword = TextEditingController();
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  final userController = Get.put(UserController());
 
   @override
   void onInit() {
-    tecEmail.text = localStorage.read('REMEMBER_ME_EMAIL');
-    //tecPassword.text = localStorage.read('REMEMBER_ME_PASSWORD');
     super.onInit();
+    // tecEmail.text = localStorage.read('REMEMBER_ME_EMAIL');
+    //tecPassword.text = localStorage.read('REMEMBER_ME_PASSWORD');
   }
 
   /// Email and Password Sign in
@@ -50,9 +52,8 @@ class LoginController extends GetxController {
       }
 
       // Login user using Email & Password authentication
-      final userCredentials = await AuthenticationRepository.instance
-          .loginWithEmailAndPassword(
-              tecEmail.text.trim(), tecPassword.text.trim());
+      await AuthenticationRepository.instance.loginWithEmailAndPassword(
+          tecEmail.text.trim(), tecPassword.text.trim());
 
       // Remove loader
       TFullScreenLoader.stopLoading();
@@ -60,6 +61,39 @@ class LoginController extends GetxController {
       // Redirect screen
       AuthenticationRepository.instance.screenRedirect();
     } catch (e) {
+      TFullScreenLoader.stopLoading();
+      TLoaders.errorSnackBar(title: 'Oh snap', message: e.toString());
+    }
+  }
+
+  /// -- Google SignIn Authentication
+  Future<void> googleSignIn() async {
+    try {
+      // Start loading
+      TFullScreenLoader.openLoadingDialog(
+          'Loggin you in...', TImages.loaderAnimation);
+
+      // Check internet connectivity
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        TFullScreenLoader.stopLoading();
+        return;
+      }
+
+      // Google Authentication
+      final userCredentials =
+          await AuthenticationRepository.instance.signInWithGoogle();
+
+      // Save user record
+      await userController.saveUserRecord(userCredentials);
+
+      // Remove loader
+      TFullScreenLoader.stopLoading();
+
+      // Redirect screen
+      AuthenticationRepository.instance.screenRedirect();
+    } catch (e) {
+      // Remove loader
       TFullScreenLoader.stopLoading();
       TLoaders.errorSnackBar(title: 'Oh snap', message: e.toString());
     }

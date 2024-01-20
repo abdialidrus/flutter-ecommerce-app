@@ -39,20 +39,16 @@ class AuthenticationRepository extends GetxController {
       }
     } else {
       deviceStorage.writeIfNull('isFirstTime', true);
-      deviceStorage.read('isFirstTime') != true
-          ? Get.offAll(() => const LoginScreen())
-          : Get.offAll(() => const OnBoardingScreen());
+      deviceStorage.read('isFirstTime') != true ? Get.offAll(() => const LoginScreen()) : Get.offAll(() => const OnBoardingScreen());
     }
   }
 
   /* --------------- Email & Password Sign-in -------------- */
 
   /// [EmailAuthentication] - Signin
-  Future<UserCredential?> loginWithEmailAndPassword(
-      String email, String password) async {
+  Future<UserCredential?> loginWithEmailAndPassword(String email, String password) async {
     try {
-      return await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
+      return await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
@@ -63,8 +59,7 @@ class AuthenticationRepository extends GetxController {
       throw TPlatformException(e.code).message;
     } catch (e) {
       if (kDebugMode) {
-        print(
-            'UNEXPECTED_EXCEPTION - loginWithEmailAndPassword() | error => $e');
+        print('UNEXPECTED_EXCEPTION - loginWithEmailAndPassword() | error => $e');
       }
       return null;
     }
@@ -76,8 +71,7 @@ class AuthenticationRepository extends GetxController {
     String password,
   ) async {
     try {
-      return await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      return await _auth.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
@@ -88,8 +82,7 @@ class AuthenticationRepository extends GetxController {
       throw TPlatformException(e.code).message;
     } catch (e) {
       if (kDebugMode) {
-        print(
-            'UNEXPECTED_EXCEPTION - registerWithEmailAndPassword() | error => $e');
+        print('UNEXPECTED_EXCEPTION - registerWithEmailAndPassword() | error => $e');
       }
       return null;
     }
@@ -118,6 +111,24 @@ class AuthenticationRepository extends GetxController {
   /// [ReAuthenticate] - Reauthenticate User
 
   /// [EmailAuthentication] - Forgot Password
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      if (kDebugMode) {
+        print('UNEXPECTED_EXCEPTION - sendEmailVerification() | error => $e');
+      }
+      return;
+    }
+  }
 
 /* ----------- Social Sign-in --------------- */
   /// [GoogleAuthentication] - GOOGLE
@@ -127,8 +138,7 @@ class AuthenticationRepository extends GetxController {
       final GoogleSignInAccount? userAccount = await GoogleSignIn().signIn();
 
       // Obtain the auth details from the request
-      final GoogleSignInAuthentication? googleAuth =
-          await userAccount?.authentication;
+      final GoogleSignInAuthentication? googleAuth = await userAccount?.authentication;
 
       // Create a new credential
       final credentials = GoogleAuthProvider.credential(

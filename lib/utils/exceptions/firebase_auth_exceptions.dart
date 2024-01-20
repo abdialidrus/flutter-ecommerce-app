@@ -43,6 +43,14 @@ class TFirebaseAuthException implements Exception {
         return 'An account already exists with the same email but different sign-in credentials.';
       case 'operation-not-allowed':
         return 'This operation is not allowed. Contact support for assistance.';
+      case 'expired-action-code':
+        return 'The action code has expired. Please request a new action code.';
+      case 'invalid-action-code':
+        return 'The action code is invalid. Please check the code and try again.';
+      case 'missing-action-code':
+        return 'The action code is missing. Please provide a valid action code';
+      case 'user-token-expired':
+        return 'The user\'s token has expired, and authentication is required. Please sign in again.';
       default:
         return 'An unexpected Firebase Authentication error occured. Please try again. ($code)';
     }

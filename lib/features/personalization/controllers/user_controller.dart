@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce_app/data/repositories/user/user_repository.dart';
 import 'package:flutter_ecommerce_app/features/personalization/models/user_model.dart';
 import 'package:flutter_ecommerce_app/utils/popups/loaders.dart';
@@ -9,7 +10,12 @@ class UserController extends GetxController {
 
   final profileLoading = false.obs;
   Rx<UserModel> user = UserModel.empty().obs;
+
+  final hidePassword = false.obs;
+  final verifyEmailTec = TextEditingController();
+  final verifyPasswordTec = TextEditingController();
   final userRepository = Get.put(UserRepository());
+  GlobalKey<FormState> reAuthFormKey = GlobalKey<FormState>();
 
   @override
   onInit() {

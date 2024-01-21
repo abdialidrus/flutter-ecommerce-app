@@ -3,7 +3,7 @@ import 'package:flutter_ecommerce_app/common/widgets/appbar/appbar.dart';
 import 'package:flutter_ecommerce_app/common/widgets/images/t_circular_image.dart';
 import 'package:flutter_ecommerce_app/common/widgets/texts/section_heading.dart';
 import 'package:flutter_ecommerce_app/features/personalization/controllers/user_controller.dart';
-import 'package:flutter_ecommerce_app/features/personalization/screens/profile/change_name.dart';
+import 'package:flutter_ecommerce_app/features/personalization/screens/profile/widgets/change_name.dart';
 import 'package:flutter_ecommerce_app/features/personalization/screens/profile/widgets/profile_menu.dart';
 import 'package:flutter_ecommerce_app/utils/constants/image_strings.dart';
 import 'package:flutter_ecommerce_app/utils/constants/sizes.dart';

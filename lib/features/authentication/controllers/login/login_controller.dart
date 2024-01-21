@@ -22,7 +22,7 @@ class LoginController extends GetxController {
   void onReady() {
     super.onReady();
     emailTec.text = localStorage.read('REMEMBER_ME_EMAIL');
-    //passwordTec.text = localStorage.read('REMEMBER_ME_PASSWORD');
+    passwordTec.text = localStorage.read('REMEMBER_ME_PASSWORD');
   }
 
   /// Email and Password Sign in

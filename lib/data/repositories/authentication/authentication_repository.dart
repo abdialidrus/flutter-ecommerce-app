@@ -46,7 +46,7 @@ class AuthenticationRepository extends GetxController {
   /* --------------- Email & Password Sign-in -------------- */
 
   /// [EmailAuthentication] - Signin
-  Future<UserCredential?> loginWithEmailAndPassword(String email, String password) async {
+  Future<UserCredential> loginWithEmailAndPassword(String email, String password) async {
     try {
       return await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
@@ -61,12 +61,12 @@ class AuthenticationRepository extends GetxController {
       if (kDebugMode) {
         print('UNEXPECTED_EXCEPTION - loginWithEmailAndPassword() | error => $e');
       }
-      return null;
+      throw 'Something went wrong. Please Try again';
     }
   }
 
   /// [EmailAuthentication] - Registration
-  Future<UserCredential?> registerWithEmailAndPassword(
+  Future<UserCredential> registerWithEmailAndPassword(
     String email,
     String password,
   ) async {
@@ -84,7 +84,7 @@ class AuthenticationRepository extends GetxController {
       if (kDebugMode) {
         print('UNEXPECTED_EXCEPTION - registerWithEmailAndPassword() | error => $e');
       }
-      return null;
+      throw 'Something went wrong. Please Try again';
     }
   }
 
@@ -104,7 +104,7 @@ class AuthenticationRepository extends GetxController {
       if (kDebugMode) {
         print('UNEXPECTED_EXCEPTION - sendEmailVerification() | error => $e');
       }
-      return;
+      throw 'Something went wrong. Please Try again';
     }
   }
 
@@ -126,13 +126,13 @@ class AuthenticationRepository extends GetxController {
       if (kDebugMode) {
         print('UNEXPECTED_EXCEPTION - sendEmailVerification() | error => $e');
       }
-      return;
+      throw 'Something went wrong. Please Try again';
     }
   }
 
 /* ----------- Social Sign-in --------------- */
   /// [GoogleAuthentication] - GOOGLE
-  Future<UserCredential?> signInWithGoogle() async {
+  Future<UserCredential> signInWithGoogle() async {
     try {
       // Trigger the authentication flow
       final GoogleSignInAccount? userAccount = await GoogleSignIn().signIn();
@@ -160,7 +160,7 @@ class AuthenticationRepository extends GetxController {
       if (kDebugMode) {
         print('UNEXPECTED_EXCEPTION - signInWithGoogle() | error => $e');
       }
-      return null;
+      throw 'Something went wrong. Please Try again';
     }
   }
 
@@ -188,7 +188,7 @@ class AuthenticationRepository extends GetxController {
       if (kDebugMode) {
         print('UNEXPECTED_EXCEPTION - logout() | error => $e');
       }
-      return;
+      throw 'Something went wrong. Please Try again';
     }
   }
 }

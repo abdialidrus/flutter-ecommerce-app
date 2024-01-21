@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_ecommerce_app/data/repositories/user/user_repository.dart';
 
 import 'package:flutter_ecommerce_app/features/authentication/screens/login/login.dart';
 import 'package:flutter_ecommerce_app/features/authentication/screens/onboarding/onboarding.dart';
@@ -112,6 +113,28 @@ class AuthenticationRepository extends GetxController {
   }
 
   /// [ReAuthenticate] - Reauthenticate User
+  Future<void> reAuthenticateWithEmailAndPassword(String email, String password) async {
+    try {
+      // Create a credential
+      AuthCredential credential = EmailAuthProvider.credential(email: email, password: password);
+
+      // ReAuthenticate
+      await _auth.currentUser!.reauthenticateWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      if (kDebugMode) {
+        print('UNEXPECTED_EXCEPTION - sendEmailVerification() | error => $e');
+      }
+      throw 'Something went wrong. Please Try again';
+    }
+  }
 
   /// [EmailAuthentication] - Forgot Password
   Future<void> sendPasswordResetEmail(String email) async {
@@ -174,6 +197,26 @@ class AuthenticationRepository extends GetxController {
   /// [LogoutUser] - valid for any authentication
 
   /// [DeleteUser] - Remove user Auth and Firestore account
+  Future<void> deleteAccount() async {
+    try {
+      await UserRepository.instance.removeUserRecord(_auth.currentUser!.uid);
+      await _auth.currentUser?.delete();
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      if (kDebugMode) {
+        print('UNEXPECTED_EXCEPTION - logout() | error => $e');
+      }
+      throw 'Something went wrong. Please Try again';
+    }
+  }
+
   Future<void> logout() async {
     try {
       await GoogleSignIn().signOut();

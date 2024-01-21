@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce_app/features/authentication/controllers/forget_password/forget_password_controller.dart';
-import 'package:flutter_ecommerce_app/features/authentication/screens/password_configuration/reset_password.dart';
 import 'package:flutter_ecommerce_app/utils/constants/sizes.dart';
 import 'package:flutter_ecommerce_app/utils/constants/text_strings.dart';
 import 'package:flutter_ecommerce_app/utils/validators/validation.dart';

@@ -25,7 +25,7 @@ class TLoginForm extends StatelessWidget {
           children: [
             /// Email
             TextFormField(
-              controller: controller.tecEmail,
+              controller: controller.emailTec,
               validator: (value) => TValidator.validateEmail(value),
               decoration: const InputDecoration(
                 prefixIcon: Icon(Iconsax.direct_right),
@@ -37,20 +37,16 @@ class TLoginForm extends StatelessWidget {
             /// Password
             Obx(
               () => TextFormField(
-                controller: controller.tecPassword,
-                validator: (value) =>
-                    TValidator.validateEmptyText('Password', value),
+                controller: controller.passwordTec,
+                validator: (value) => TValidator.validateEmptyText('Password', value),
                 expands: false,
                 obscureText: controller.hidePassword.value,
                 decoration: InputDecoration(
                   labelText: TTexts.password,
                   prefixIcon: const Icon(Iconsax.password_check),
                   suffixIcon: IconButton(
-                    onPressed: () => controller.hidePassword.value =
-                        !controller.hidePassword.value,
-                    icon: Icon(controller.hidePassword.value
-                        ? Iconsax.eye
-                        : Iconsax.eye_slash),
+                    onPressed: () => controller.hidePassword.value = !controller.hidePassword.value,
+                    icon: Icon(controller.hidePassword.value ? Iconsax.eye : Iconsax.eye_slash),
                   ),
                 ),
               ),
@@ -65,10 +61,7 @@ class TLoginForm extends StatelessWidget {
                 Row(
                   children: [
                     Obx(
-                      () => Checkbox(
-                          value: controller.rememberMe.value,
-                          onChanged: (value) =>
-                              controller.rememberMe.value = value!),
+                      () => Checkbox(value: controller.rememberMe.value, onChanged: (value) => controller.rememberMe.value = value!),
                     ),
                     const Text(TTexts.rememberMe),
                   ],

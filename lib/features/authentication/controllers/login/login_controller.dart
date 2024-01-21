@@ -13,24 +13,23 @@ class LoginController extends GetxController {
   final rememberMe = false.obs;
   final hidePassword = true.obs;
   final localStorage = GetStorage();
-  final tecEmail = TextEditingController();
-  final tecPassword = TextEditingController();
+  final emailTec = TextEditingController();
+  final passwordTec = TextEditingController();
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   final userController = Get.put(UserController());
 
   @override
-  void onInit() {
-    super.onInit();
-    // tecEmail.text = localStorage.read('REMEMBER_ME_EMAIL');
-    //tecPassword.text = localStorage.read('REMEMBER_ME_PASSWORD');
+  void onReady() {
+    super.onReady();
+    emailTec.text = localStorage.read('REMEMBER_ME_EMAIL');
+    //passwordTec.text = localStorage.read('REMEMBER_ME_PASSWORD');
   }
 
   /// Email and Password Sign in
   Future<void> emailAndPasswordSignIn() async {
     try {
       // Start loading
-      TFullScreenLoader.openLoadingDialog(
-          'Loggin you in...', TImages.loaderAnimation);
+      TFullScreenLoader.openLoadingDialog('Loggin you in...', TImages.loaderAnimation);
 
       // Check internet connectivity
       final isConnected = await NetworkManager.instance.isConnected();
@@ -47,13 +46,12 @@ class LoginController extends GetxController {
 
       // Save data if remember me is selected
       if (rememberMe.value) {
-        localStorage.write('REMEMBER_ME_EMAIL', tecEmail.text.trim());
-        localStorage.write('REMEMBER_ME_PASSWORD', tecPassword.text.trim());
+        localStorage.write('REMEMBER_ME_EMAIL', emailTec.text.trim());
+        localStorage.write('REMEMBER_ME_PASSWORD', passwordTec.text.trim());
       }
 
       // Login user using Email & Password authentication
-      await AuthenticationRepository.instance.loginWithEmailAndPassword(
-          tecEmail.text.trim(), tecPassword.text.trim());
+      await AuthenticationRepository.instance.loginWithEmailAndPassword(emailTec.text.trim(), passwordTec.text.trim());
 
       // Remove loader
       TFullScreenLoader.stopLoading();
@@ -70,8 +68,7 @@ class LoginController extends GetxController {
   Future<void> googleSignIn() async {
     try {
       // Start loading
-      TFullScreenLoader.openLoadingDialog(
-          'Loggin you in...', TImages.loaderAnimation);
+      TFullScreenLoader.openLoadingDialog('Loggin you in...', TImages.loaderAnimation);
 
       // Check internet connectivity
       final isConnected = await NetworkManager.instance.isConnected();
@@ -81,8 +78,7 @@ class LoginController extends GetxController {
       }
 
       // Google Authentication
-      final userCredentials =
-          await AuthenticationRepository.instance.signInWithGoogle();
+      final userCredentials = await AuthenticationRepository.instance.signInWithGoogle();
 
       // Save user record
       await userController.saveUserRecord(userCredentials);

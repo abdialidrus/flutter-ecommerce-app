@@ -7,17 +7,36 @@ import 'package:get/get.dart';
 class UserController extends GetxController {
   static UserController get instance => Get.find();
 
+  final profileLoading = false.obs;
+  Rx<UserModel> user = UserModel.empty().obs;
   final userRepository = Get.put(UserRepository());
+
+  @override
+  onInit() {
+    super.onInit();
+    fetchUserRecord();
+  }
+
+  // Fetch user record
+  Future<void> fetchUserRecord() async {
+    try {
+      profileLoading.value = true;
+      final user = await userRepository.fetchUserDetails();
+      this.user(user);
+    } catch (e) {
+      user(UserModel.empty());
+    } finally {
+      profileLoading.value = false;
+    }
+  }
 
   /// Save user record from any Registration provider
   Future<void> saveUserRecord(UserCredential? userCredentials) async {
     try {
       if (userCredentials != null) {
         // Conver name to First and Last Name
-        final nameParts =
-            UserModel.nameParts(userCredentials.user!.displayName ?? '');
-        final username =
-            UserModel.generateUserName(userCredentials.user!.displayName ?? '');
+        final nameParts = UserModel.nameParts(userCredentials.user!.displayName ?? '');
+        final username = UserModel.generateUserName(userCredentials.user!.displayName ?? '');
 
         // Map Data
         final user = UserModel(
@@ -36,8 +55,7 @@ class UserController extends GetxController {
     } catch (e) {
       TLoaders.warningSnackBar(
         title: 'Data not saved',
-        message:
-            'Something went wrong while saving your information. You can re-save your data in your Profile.',
+        message: 'Something went wrong while saving your information. You can re-save your data in your Profile.',
       );
     }
   }

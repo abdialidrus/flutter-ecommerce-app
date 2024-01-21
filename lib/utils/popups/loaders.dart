@@ -5,8 +5,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class TLoaders {
-  static hideSnackBar() =>
-      ScaffoldMessenger.of(Get.context!).hideCurrentSnackBar();
+  static hideSnackBar() => ScaffoldMessenger.of(Get.context!).hideCurrentSnackBar();
 
   static customToast({required message}) {
     ScaffoldMessenger.of(Get.context!).showSnackBar(
@@ -19,13 +18,9 @@ class TLoaders {
           margin: const EdgeInsets.symmetric(horizontal: 30),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
-            color: THelperFunctions.isDarkMode(Get.context!)
-                ? TColors.darkerGrey.withOpacity(0.9)
-                : TColors.grey.withOpacity(0.9),
+            color: THelperFunctions.isDarkMode(Get.context!) ? TColors.darkerGrey.withOpacity(0.9) : TColors.grey.withOpacity(0.9),
           ),
-          child: Center(
-              child: Text(message,
-                  style: Theme.of(Get.context!).textTheme.labelLarge)),
+          child: Center(child: Text(message, style: Theme.of(Get.context!).textTheme.labelLarge)),
         ),
       ),
     );
@@ -54,7 +49,7 @@ class TLoaders {
       shouldIconPulse: true,
       colorText: Colors.white,
       backgroundColor: Colors.orange,
-      snackPosition: SnackPosition.TOP,
+      snackPosition: SnackPosition.BOTTOM,
       duration: const Duration(seconds: 3),
       margin: const EdgeInsets.all(20),
       icon: const Icon(Iconsax.warning_2, color: TColors.white),

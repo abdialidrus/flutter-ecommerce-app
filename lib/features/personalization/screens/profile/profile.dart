@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce_app/common/widgets/appbar/appbar.dart';
 import 'package:flutter_ecommerce_app/common/widgets/images/t_circular_image.dart';
 import 'package:flutter_ecommerce_app/common/widgets/texts/section_heading.dart';
+import 'package:flutter_ecommerce_app/features/personalization/controllers/user_controller.dart';
+import 'package:flutter_ecommerce_app/features/personalization/screens/profile/change_name.dart';
 import 'package:flutter_ecommerce_app/features/personalization/screens/profile/widgets/profile_menu.dart';
 import 'package:flutter_ecommerce_app/utils/constants/image_strings.dart';
 import 'package:flutter_ecommerce_app/utils/constants/sizes.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -12,6 +15,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = UserController.instance;
     return Scaffold(
       appBar: const TAppBar(
         showBackArrow: true,
@@ -54,12 +58,12 @@ class ProfileScreen extends StatelessWidget {
 
               TProfileMenu(
                 title: 'Name',
-                value: 'Abdi Alidrus',
-                onTap: () {},
+                value: controller.user.value.fullName,
+                onTap: () => Get.to(() => const ChangeName()),
               ),
               TProfileMenu(
                 title: 'Username',
-                value: 'abdialidrus',
+                value: controller.user.value.username,
                 onTap: () {},
               ),
 
@@ -76,18 +80,18 @@ class ProfileScreen extends StatelessWidget {
 
               TProfileMenu(
                 title: 'User ID',
-                value: '363523623',
+                value: controller.user.value.id,
                 icon: Iconsax.copy,
                 onTap: () {},
               ),
               TProfileMenu(
                 title: 'E-mail',
-                value: 'muhammadabdi25@gmail.com',
+                value: controller.user.value.email,
                 onTap: () {},
               ),
               TProfileMenu(
                 title: 'Phone Number',
-                value: '+62-876-543210',
+                value: controller.user.value.phoneNumber,
                 onTap: () {},
               ),
               TProfileMenu(

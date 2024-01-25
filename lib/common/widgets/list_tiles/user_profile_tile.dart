@@ -18,11 +18,12 @@ class TUserProfileTile extends StatelessWidget {
     final controller = UserController.instance;
 
     return ListTile(
-        leading: const TCircularImage(
-          image: TImages.user,
+        leading: TCircularImage(
+          image: controller.user.value.profilePicture.isNotEmpty ? controller.user.value.profilePicture : TImages.user,
           width: 50,
           height: 50,
           padding: 0,
+          isNetworkImage: controller.user.value.profilePicture.isNotEmpty,
         ),
         title: Text(
           controller.user.value.fullName,

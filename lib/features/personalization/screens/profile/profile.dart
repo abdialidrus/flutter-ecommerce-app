@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce_app/common/widgets/appbar/appbar.dart';
 import 'package:flutter_ecommerce_app/common/widgets/images/t_circular_image.dart';
-import 'package:flutter_ecommerce_app/common/widgets/loaders/shimmer.dart';
+import 'package:flutter_ecommerce_app/common/widgets/shimmers/shimmer.dart';
 import 'package:flutter_ecommerce_app/common/widgets/texts/section_heading.dart';
 import 'package:flutter_ecommerce_app/features/personalization/controllers/user_controller.dart';
 import 'package:flutter_ecommerce_app/features/personalization/screens/profile/widgets/change_name.dart';

@@ -9,7 +9,6 @@ import 'package:flutter_ecommerce_app/features/shop/screens/home/widgets/home_ap
 import 'package:flutter_ecommerce_app/features/shop/screens/home/widgets/home_categories.dart';
 import 'package:flutter_ecommerce_app/features/shop/screens/home/widgets/promo_slider.dart';
 import 'package:flutter_ecommerce_app/utils/constants/colors.dart';
-import 'package:flutter_ecommerce_app/utils/constants/image_strings.dart';
 import 'package:flutter_ecommerce_app/utils/constants/sizes.dart';
 import 'package:get/get.dart';
 
@@ -62,19 +61,11 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 children: [
                   /// Promo Slider
-                  const TPromoSlider(
-                    banners: [
-                      TImages.promoBanner1,
-                      TImages.promoBanner2,
-                      TImages.promoBanner3,
-                    ],
-                  ),
+                  const TPromoSlider(),
                   const SizedBox(height: TSizes.spaceBtwSections),
 
                   /// Popular Products - Heading
-                  TSectionHeading(
-                      title: 'Popular Products',
-                      onPressed: () => Get.to(() => const AllProductsScreen())),
+                  TSectionHeading(title: 'Popular Products', onPressed: () => Get.to(() => const AllProductsScreen())),
                   const SizedBox(height: TSizes.spaceBtwItems),
 
                   /// Popular Products - List

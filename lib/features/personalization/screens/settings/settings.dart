@@ -7,6 +7,7 @@ import 'package:flutter_ecommerce_app/common/widgets/texts/section_heading.dart'
 import 'package:flutter_ecommerce_app/data/repositories/authentication/authentication_repository.dart';
 import 'package:flutter_ecommerce_app/features/personalization/screens/address/address.dart';
 import 'package:flutter_ecommerce_app/features/personalization/screens/profile/profile.dart';
+import 'package:flutter_ecommerce_app/features/shop/controllers/product_controller.dart';
 import 'package:flutter_ecommerce_app/features/shop/screens/order/order.dart';
 import 'package:flutter_ecommerce_app/utils/constants/colors.dart';
 import 'package:flutter_ecommerce_app/utils/constants/sizes.dart';
@@ -29,10 +30,7 @@ class SettingsScreen extends StatelessWidget {
                   TAppBar(
                     title: Text(
                       'Account',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium!
-                          .apply(color: TColors.white),
+                      style: Theme.of(context).textTheme.headlineMedium!.apply(color: TColors.white),
                     ),
                   ),
 
@@ -51,8 +49,7 @@ class SettingsScreen extends StatelessWidget {
               child: Column(
                 children: [
                   /// Account Setting
-                  const TSectionHeading(
-                      title: 'Account Settings', showActionButton: false),
+                  const TSectionHeading(title: 'Account Settings', showActionButton: false),
                   const SizedBox(height: TSizes.spaceBtwItems),
 
                   TSettingsMenuTile(
@@ -95,13 +92,13 @@ class SettingsScreen extends StatelessWidget {
 
                   /// App settings
                   const SizedBox(height: TSizes.spaceBtwSections),
-                  const TSectionHeading(
-                      title: 'App Settings', showActionButton: false),
+                  const TSectionHeading(title: 'App Settings', showActionButton: false),
                   const SizedBox(height: TSizes.spaceBtwItems),
-                  const TSettingsMenuTile(
+                  TSettingsMenuTile(
                     icon: Iconsax.document_upload,
                     title: 'Load Data',
                     subtitle: 'Upload data to your Cloud Firebase',
+                    onTap: () => ProductController.instance.uploadDummyProducts(),
                   ),
                   TSettingsMenuTile(
                     icon: Iconsax.location,
@@ -136,8 +133,7 @@ class SettingsScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: OutlinedButton(
-                      onPressed: () =>
-                          AuthenticationRepository.instance.logout(),
+                      onPressed: () => AuthenticationRepository.instance.logout(),
                       child: const Text('Logout'),
                     ),
                   ),
